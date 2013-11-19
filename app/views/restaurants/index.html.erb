@@ -1,4 +1,11 @@
 <h1>Restaurants</h1>
 
-<% @restaurants.each do |restaurant| %>
-<% restaurant.name %>
+<% @restaurants.each do |r| %>
+<div class= restName><%= link_to (r[:name]), restaurant_path(r.id) %></div><br/>
+<div class= cusine><%= r.cuisine %>
+<%= r.price_range %></div>
+<div class= restAdd><%= r.street_address %></div><br/>
+<div class= restcity><%= r.city %>, <%= r.province %><%= r.postal_code %></div><br/>
+<div class= neighb><%= r.neighborhood %></div>
+<% end %>
+

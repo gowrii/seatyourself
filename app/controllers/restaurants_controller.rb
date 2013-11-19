@@ -6,6 +6,10 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find(params[:id])
+
+    if current_user
+      @reservation = @restaurant.reservations.build
+    end
   end
 
   def new
@@ -14,8 +18,9 @@ class RestaurantsController < ApplicationController
 
   def create
     @restaurant = Restaurant.new(restaurant_params)
+    
     if @restaurant.save
-      redirect_to restaurants_path
+      redirect_to restaurants_path(@restaurant)
     else
     render "new"
     end
@@ -28,7 +33,7 @@ class RestaurantsController < ApplicationController
   def update
     @restaurant = Restaurant.find(params[:id])
     if @restaurant.update_attributes(restaurant_params)
-      redirect_to restaurant_path(@restaurant)
+      redirect_to restaurants_path(@restaurant), notice: "Restaurant has been updated"
     else
       render :edit
     end
@@ -37,11 +42,11 @@ class RestaurantsController < ApplicationController
   def destroy
     @restaurant = Restaurant.find(params[:id])
     @restaurant.destroy
-    redirect_to restaurant_path
+    redirect_to restaurants_path
 
   end
 
   def restaurant_params
-    params.require(:restaurant).permit()
+    params.require(:restaurant).permit(:name, :street_address, :city, :province, :postal_code, :neighborhood, :cuisine, :price_range, :dining_style, :website, :email, :phone_no, :special_meals, :description, :capacity, :mon_open, :mon_close, :tue_open, :tue_close, :wed_open, :wed_close, :thu_open, :thu_close, :fri_open, :fri_close, :sat_open, :sat_close, :sun_open, :sun_close, :start_time, :end_time)
   end
 end

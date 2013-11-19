@@ -1,2 +1,30 @@
-<h1>Index#show</h1>
-<p>Find me in app/views/index/show.html.erb</p>
+3:00 pm<h1> <%= @restaurant[:name] %> </h1>
+
+
+<div class= cusine>Cuisine: <%= @restaurant [:cuisine] %><br/>
+Price Range: $<%= @restaurant [:price_range] %></div>
+<div class= restAdd><%= @restaurant[:street_address] %></div>
+<div class= restcity><%= @restaurant [:city] %>, <%= @restaurant [:province] %><%= @restaurant [:postal_code] %></div><br/>
+<div class= neighb>Neighborhood: <%= @restaurant [:neighborhood] %></div><br/>
+<%= @restaurant[:description] %>
+
+	<% if current_user %>
+	<h2>Make a reservation</h2>
+	<%= form_for @reservation do |f| %>
+
+		<div class= "field"><%= f.label :reserve_time %><br/>
+		<%= f.datetime_select :reserve_time %><br/></div>
+		<div class= "field"><%= f.label :seats %><br/>
+		<%= f.number_field :seats %><br/></div>
+		<div class= "action"><%= f.submit %></div>
+<% end %>
+	<% else %>
+	  <p>Please <%= link_to "log in", new_session_path %> to make a reservation.</p> 
+	<% end %>
+
+
+
+
+
+
+
