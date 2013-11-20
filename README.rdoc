@@ -1,28 +1,39 @@
-== README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+we want to see if a reservation is cool
+  = reservation is valid
+  = no errors on reservation
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+possible inputs:
+* start time (must be at the top of the hour, so only 24 slots available per day)
+* number of guests
+* dude that is booking the reservation
+* restaurant that the reservation is for
+* duration of reservation? (this is fixed at one hour to keep things simple)
+
+criteria:
+* start time is within restaurant's opening hours
+* requested number of guests < capacity(restaurant, time)
+
+
+
+
+restaurant_id = 1
+
+
+@reservation = Reservation.new( :restaurant_id => 1 )
+
+.... resevation#create
+
+number of guests 5
+start time 7pm
+
+* for the 7 pm hour time slot, total booked number of guests + new guest request # < 100
+
+running_total_for_request_time_slot = 0
+
+total booked ->
+   iterate over reservations for the specific requested time slot  ... each |r|
+       running_total_for_request_time_slot += r.party_size
+
+
+a reservation is valid if: running_total + current_reservation.num_guests < 100

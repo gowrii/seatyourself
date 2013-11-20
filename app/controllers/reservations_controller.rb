@@ -1,22 +1,25 @@
 class ReservationsController < ApplicationController
   before_filter :load_restaurant
   
+  
   def show
   	@reservations = Reservation.find[params[:id]]
   end
 
   def new
   	@reservation = Reservation.new
+    @restaruant = Restaurant.find_by_id(params[:restaurant])
   end
 
   def create
-  	@reservation = @restaurant.reservations.build(reservation_params)
+  	@reservation = Reservation.new(reservation_params)
+    @restaurant = Restaurant.find_by_id(params[:restaurant])
   		@reservation.user_id = current_user.id
-  		if @reservation.save
+  		if @reservation.availability?(@reservation) && @reservation.save 
   		redirect_to restaurants_path, notice: "Reservation created"
   	  else
-  		:action => :show
-  	end
+  		  redirect_to :show
+  	  end
   end
 
   def destroy
@@ -29,7 +32,8 @@ class ReservationsController < ApplicationController
   end
 
   def load_restaurant
-  	@restaurant = Restaurant.find(params[:restaurant_id])
-  	
+  	@restaurant = Restaurant.find_by_id(params[:restaurant])
   end
+
+
 end

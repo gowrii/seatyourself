@@ -22,7 +22,7 @@ class RestaurantsController < ApplicationController
     if @restaurant.save
       redirect_to restaurants_path(@restaurant)
     else
-    render "new"
+    render :new
     end
   end
 
@@ -47,6 +47,6 @@ class RestaurantsController < ApplicationController
   end
 
   def restaurant_params
-    params.require(:restaurant).permit(:name, :street_address, :city, :province, :postal_code, :neighborhood, :cuisine, :price_range, :dining_style, :website, :email, :phone_no, :special_meals, :description, :capacity, :mon_open, :mon_close, :tue_open, :tue_close, :wed_open, :wed_close, :thu_open, :thu_close, :fri_open, :fri_close, :sat_open, :sat_close, :sun_open, :sun_close, :start_time, :end_time)
+    params.require(:restaurant).permit(:name, :street_address, :city, :province, :postal_code, :neighborhood, :cuisine, :price_range, :dining_style, :website, :email, :phone_no, :special_meals, :description, :capacity, :sat_open, :sat_close, :sun_open, :sun_close, :start_time, :end_time)
   end
 end
