@@ -13,9 +13,9 @@ class ReservationsController < ApplicationController
 
   def create
   	@reservation = Reservation.new(reservation_params)
-    @restaurant = Restaurant.find_by_id(params[:restaurant])
-  		@reservation.user_id = current_user.id
-  		if @reservation.availability?(@reservation) && @reservation.save 
+    @restaurant = Restaurant.find_by_id(params[:restaurant_id])
+  		@reservation.user_id = current_user.id      
+  		if @restaurant.availability?(@reservation) && @reservation.save 
   		redirect_to restaurants_path, notice: "Reservation created"
   	  else
   		  redirect_to :show
